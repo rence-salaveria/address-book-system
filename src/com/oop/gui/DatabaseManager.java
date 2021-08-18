@@ -42,6 +42,8 @@ public class DatabaseManager {
         } catch (SQLException e) {
             System.out.println("Cannot retrieve maximum ID");
             return 0;
+        } catch (NullPointerException e) {
+            return 1;
         }
     }
 
@@ -78,17 +80,13 @@ public class DatabaseManager {
             while(rs.next()) {
                 rowNumber++;
             }
-            if (id > rowNumber || id <= 0) {
-                JOptionPane.showMessageDialog(null, "You have entered an ID with no name assigned yet.");
-            } else {
-                prep = conn.prepareStatement(
-                        "DELETE FROM address_book WHERE contact_id = ?"
-                );
-                prep.setInt(1, id);
-                i = prep.executeUpdate();
-                System.out.printf("%d record deleted from table\n", i);
-                JOptionPane.showMessageDialog(null, "Record deleted Successfully");
-            }
+            prep = conn.prepareStatement(
+                    "DELETE FROM address_book WHERE contact_id = ?"
+            );
+            prep.setInt(1, id);
+            i = prep.executeUpdate();
+            System.out.printf("%d record deleted from table\n", i);
+            JOptionPane.showMessageDialog(null, (i + " Record deleted Successfully"));
         } catch (SQLException e) {
             System.out.println("Failed to delete record to database");
         }
@@ -111,7 +109,7 @@ public class DatabaseManager {
         }
     }
 
-    public static ResultSet showRecord() {
+    public static ResultSet tableSet() {
         try {
             prep = conn.prepareStatement("SELECT * FROM address_book");
             return prep.executeQuery();
@@ -122,4 +120,12 @@ public class DatabaseManager {
         }
     }
 
+    public static void truncateTable() {
+        try {
+            prep = conn.prepareStatement("DELETE FROM address_book");
+            prep.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Failed to truncate table");
+        }
+    }
 }
