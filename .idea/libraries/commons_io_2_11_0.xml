@@ -1,7 +1,8 @@
 <component name="libraryTable">
   <library name="commons-io-2.11.0">
     <CLASSES>
-      <root url="jar://$USER_HOME$/Downloads/commons-io-2.11.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/commons-io-2.11.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/opencsv-3.8.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
